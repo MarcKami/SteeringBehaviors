@@ -4,19 +4,26 @@ using namespace std;
 
 SceneWander::SceneWander()
 {
-	Agent *agent = new Agent;
-	agent->setPosition(Vector2D(640,360));
+	Agent *agent = new Agent;/*
+	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->setMass(0.035);
 	agent->loadSpriteTexture("../res/Fly.png", 2);
-	agents.push_back(agent);
-	target = Vector2D(640, 360);
+	agents.push_back(agent);*/
+	for (int i = 0; i < 10; i++) {
+		agent = new Agent();
+		agent->setPosition(Vector2D(640, 360));
+		agent->setTarget(Vector2D(640, 360));
+		agent->setMass(0.035);
+		agent->loadSpriteTexture("../res/Fly.png", 2);
+		agents.push_back(agent);
+	}
 	wanderMaxChange = 20;
 	wanderCircleOffset = 250;
 	wanderCircleRadius = 100;
-	wanderAngle = 0.0f;
-	wanderCircleCenter = {};
-	wanderDisplacementVector = {};
+	wanderAngle[10] = { 0.0f };
+	wanderCircleCenter[10] = {};
+	wanderDisplacementVector[10] = {};
 }
 
 SceneWander::~SceneWander()
@@ -42,27 +49,33 @@ void SceneWander::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	Vector2D velocity = agents[0]->getVelocity();
-	Vector2D position = agents[0]->getPosition();
-	float angle = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
+	for (int i = 0; i < 10; i++) {
+		Vector2D velocity = agents[i]->getVelocity();
+		Vector2D position = agents[i]->getPosition();
+		float angle = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
 
-	//Calculations for the future draw of vectors and circles
-	wanderCircleCenter = { position.x + wanderCircleOffset*cos(angle*DEG2RAD), position.y + wanderCircleOffset*sin(angle*DEG2RAD) };
-	wanderDisplacementVector = { wanderCircleCenter.x + wanderCircleRadius*cos(wanderAngle*DEG2RAD), wanderCircleCenter.y + wanderCircleRadius*sin(wanderAngle*DEG2RAD) };
-	
+		//Calculations for the future draw of vectors and circles
+		wanderCircleCenter[i] = { position.x + wanderCircleOffset*cos(angle*DEG2RAD), position.y + wanderCircleOffset*sin(angle*DEG2RAD) };
+		wanderDisplacementVector[i] = { wanderCircleCenter[i].x + wanderCircleRadius*cos(wanderAngle[i]*DEG2RAD), wanderCircleCenter[i].y + wanderCircleRadius*sin(wanderAngle[i]*DEG2RAD) };
 
-	Vector2D steering_force = agents[0]->Behavior()->Wander(agents[0], angle, &wanderAngle, wanderMaxChange,
-		wanderCircleOffset, wanderCircleRadius, dtime);
-	agents[0]->update(steering_force, dtime, event);
+
+		Vector2D steering_force = agents[i]->Behavior()->Wander(agents[i], angle, &wanderAngle[i], wanderMaxChange,
+			wanderCircleOffset, wanderCircleRadius, dtime);
+		agents[i]->update(steering_force, dtime, event);
+	}
 }
 
 void SceneWander::draw()
 {
-	Vector2D position = agents[0]->getPosition();
-	draw_circle(TheApp::Instance()->getRenderer(), (int)wanderCircleCenter.x, (int)wanderCircleCenter.y, wanderCircleRadius, 255, 0, 0, 255);
-	draw_circle(TheApp::Instance()->getRenderer(), (int)wanderDisplacementVector.x, (int)wanderDisplacementVector.y, 5, 0, 255, 0, 125);
-	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(wanderDisplacementVector.x), (int)(wanderDisplacementVector.y));
-	agents[0]->draw();
+	for (int i = 0; i < 10; i++) {
+		if (agents[i]->getDrawVector()) {
+			Vector2D position = agents[i]->getPosition();
+			draw_circle(TheApp::Instance()->getRenderer(), (int)wanderCircleCenter[i].x, (int)wanderCircleCenter[i].y, wanderCircleRadius, 255, 0, 0, 255);
+			draw_circle(TheApp::Instance()->getRenderer(), (int)wanderDisplacementVector[i].x, (int)wanderDisplacementVector[i].y, 5, 0, 255, 0, 125);
+			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(wanderDisplacementVector[i].x), (int)(wanderDisplacementVector[i].y));
+		}
+		agents[i]->draw();
+	}
 }
 
 const char* SceneWander::getTitle()
