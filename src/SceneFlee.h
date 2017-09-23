@@ -2,6 +2,7 @@
 #include <vector>
 #include "Scene.h"
 #include "Agent.h"
+#include "Target.h"
 
 class SceneFlee :
 	public Scene
@@ -14,6 +15,6 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
-	Vector2D target;
+	std::vector<Target*> targets;
 };
 

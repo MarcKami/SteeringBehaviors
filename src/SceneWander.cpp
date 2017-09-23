@@ -6,7 +6,7 @@ SceneWander::SceneWander()
 {
 	Agent *agent = new Agent;
 	for (int i = 0; i < 10; i++) {
-		agent = new Agent();
+		agent = new Agent;
 		agent->setPosition(Vector2D(640, 360));
 		agent->setTarget(Vector2D(640, 360));
 		agent->setMass(0.035);
@@ -57,7 +57,7 @@ void SceneWander::update(float dtime, SDL_Event *event)
 
 void SceneWander::draw()
 {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		if (agents[i]->getDrawVector()) {
 			Vector2D position = agents[i]->getPosition();
 			draw_circle(TheApp::Instance()->getRenderer(), (int)wanderCircleCenter[i].x, (int)wanderCircleCenter[i].y, wanderCircleRadius, 255, 0, 0, 255);
