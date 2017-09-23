@@ -4,12 +4,7 @@ using namespace std;
 
 SceneWander::SceneWander()
 {
-	Agent *agent = new Agent;/*
-	agent->setPosition(Vector2D(640, 360));
-	agent->setTarget(Vector2D(640, 360));
-	agent->setMass(0.035);
-	agent->loadSpriteTexture("../res/Fly.png", 2);
-	agents.push_back(agent);*/
+	Agent *agent = new Agent;
 	for (int i = 0; i < 10; i++) {
 		agent = new Agent();
 		agent->setPosition(Vector2D(640, 360));
@@ -18,7 +13,7 @@ SceneWander::SceneWander()
 		agent->loadSpriteTexture("../res/Fly.png", 2);
 		agents.push_back(agent);
 	}
-	wanderMaxChange = 20;
+	wanderMaxChange = 90;
 	wanderCircleOffset = 250;
 	wanderCircleRadius = 100;
 	wanderAngle[10] = { 0.0f };
@@ -40,11 +35,6 @@ void SceneWander::update(float dtime, SDL_Event *event)
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			target = Vector2D((float)(event->button.x), (float)(event->button.y));
-			agents[0]->setTarget(target);
-		}
 		break;
 	default:
 		break;
