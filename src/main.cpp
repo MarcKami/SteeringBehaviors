@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <time.h>
 
 #include "SDL_SimpleApp.h"
 #include "SceneKinematicSeek.h"
@@ -17,6 +18,8 @@ using namespace std;
 
 int main(int argc, char ** argv)
 {
+	srand(time(NULL));
+
 	bool quit = false;
 	SDL_Event event;
 
@@ -80,6 +83,9 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneWander;
+				SDL_Color color = { 255, 255, 255, 255 };
+				app->setBackgroundColor(color);
+				app->setBackgroundImage("../res/PooBackground.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))

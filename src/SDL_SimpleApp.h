@@ -14,7 +14,8 @@ private:
 	
 	int win_width;
 	int win_height;
-	SDL_Color bg_color;
+	SDL_Color bg_color = { 0, 0, 0, 255 }; //Black Default Color
+	SDL_Texture* bgImage;
 	bool win_fullscreen;
 	float last_update;
 
@@ -26,6 +27,8 @@ public:
 	SDL_Renderer * getRenderer() const { return renderer; }
 	Vector2D getWinSize();
 	void setWindowTitle(const char* title);
+	void setBackgroundColor(SDL_Color color);
+	void setBackgroundImage(char* filename);
 	void setFullScreen();
 };
 

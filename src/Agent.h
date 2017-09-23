@@ -28,6 +28,7 @@ private:
 
 	SDL_Texture *sprite_texture;
 	bool draw_sprite;
+	bool draw_vector;
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
@@ -40,6 +41,7 @@ public:
 	Vector2D getTarget();
 	Vector2D getVelocity();
 	float getMaxVelocity();
+	bool getDrawVector();
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);

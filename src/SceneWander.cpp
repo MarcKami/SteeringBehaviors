@@ -8,12 +8,12 @@ SceneWander::SceneWander()
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->setMass(0.035);
-	agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/Fly.png", 2);
 	agents.push_back(agent);
 	target = Vector2D(640, 360);
-	wanderMaxChange = 90;
-	wanderCircleOffset = 200;
-	wanderCircleRadius = 60;
+	wanderMaxChange = 20;
+	wanderCircleOffset = 250;
+	wanderCircleRadius = 100;
 	wanderAngle = 0.0f;
 	wanderCircleCenter = {};
 	wanderDisplacementVector = {};
@@ -42,11 +42,13 @@ void SceneWander::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+	Vector2D velocity = agents[0]->getVelocity();
 	Vector2D position = agents[0]->getPosition();
-	float angle = (float)(atan2(position.y, position.x) * RAD2DEG);
+	float angle = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
 
-	wanderCircleCenter = { position.x + wanderCircleOffset*cos(angle), position.y + wanderCircleOffset*sin(angle) };
-	wanderDisplacementVector = { wanderCircleCenter.x + wanderCircleRadius*cos(wanderAngle), wanderCircleCenter.y + wanderCircleRadius*sin(wanderAngle) };
+	//Calculations for the future draw of vectors and circles
+	wanderCircleCenter = { position.x + wanderCircleOffset*cos(angle*DEG2RAD), position.y + wanderCircleOffset*sin(angle*DEG2RAD) };
+	wanderDisplacementVector = { wanderCircleCenter.x + wanderCircleRadius*cos(wanderAngle*DEG2RAD), wanderCircleCenter.y + wanderCircleRadius*sin(wanderAngle*DEG2RAD) };
 	
 
 	Vector2D steering_force = agents[0]->Behavior()->Wander(agents[0], angle, &wanderAngle, wanderMaxChange,

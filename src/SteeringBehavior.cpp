@@ -119,9 +119,9 @@ Vector2D SteeringBehavior::Evade(Agent *agent, Agent *target, float dtime)
 
 //Wander Behavior
 Vector2D SteeringBehavior::Wander(Agent *agent, float angle, float *wanderAngle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime) {
-	Vector2D wanderCircleCenter = { agent->position.x + wanderCircleOffset*cos(angle), agent->position.y + wanderCircleOffset*sin(angle) };
-	*wanderAngle += (rand()) / static_cast <float> (RAND_MAX) * wanderMaxChange;
-	Vector2D randomSteering = { wanderCircleCenter.x + wanderCircleRadius*cos(*wanderAngle), wanderCircleCenter.y + wanderCircleRadius*sin(*wanderAngle) };
+	Vector2D wanderCircleCenter = { agent->position.x + wanderCircleOffset*cos(angle * DEG2RAD), agent->position.y + wanderCircleOffset*sin(angle * DEG2RAD) };
+	*wanderAngle += (rand() % (wanderMaxChange * 2) - wanderMaxChange);
+	Vector2D randomSteering = { wanderCircleCenter.x + wanderCircleRadius*cos((*wanderAngle) * DEG2RAD), wanderCircleCenter.y + wanderCircleRadius*sin((*wanderAngle) * DEG2RAD) };
 
 	return Seek(agent, randomSteering, dtime);
 }

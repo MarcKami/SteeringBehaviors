@@ -35,7 +35,7 @@ SDL_SimpleApp::SDL_SimpleApp()
 	renderer = SDL_CreateRenderer(window, -1, 0);
 
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
 	SDL_RenderClear(renderer);
 
 	last_update = (float)SDL_GetTicks();
@@ -63,8 +63,9 @@ SDL_Event SDL_SimpleApp::run(Scene *scene)
 
 	float dtime = (float)(SDL_GetTicks() - last_update) / 1000.0f;
 	last_update = (float)SDL_GetTicks();
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); //TODO set bg color
+	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
 	SDL_RenderClear(renderer);
+	if (bgImage)SDL_RenderCopy(renderer, bgImage, NULL, NULL);
 	scene->update(dtime,&event);
 	scene->draw();
 	SDL_RenderPresent(renderer);
@@ -79,6 +80,19 @@ Vector2D SDL_SimpleApp::getWinSize()
 void SDL_SimpleApp::setWindowTitle(const char *title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void SDL_SimpleApp::setBackgroundColor(SDL_Color color) {
+	bg_color = color;
+}
+
+void SDL_SimpleApp::setBackgroundImage(char* filename) {
+	SDL_Surface *image = IMG_Load(filename);
+
+	bgImage = SDL_CreateTextureFromSurface(renderer, image);
+	
+	if (image)
+		SDL_FreeSurface(image);
 }
 
 void SDL_SimpleApp::setFullScreen()
