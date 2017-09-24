@@ -2,14 +2,13 @@
 
 using namespace std;
 
-SceneWander::SceneWander()
-{
+SceneWander::SceneWander(){
 	Agent *agent = new Agent;
 	for (int i = 0; i < 10; i++) {
-		agent = new Agent;
+		agent = new Agent();
 		agent->setPosition(Vector2D(640, 360));
 		agent->setTarget(Vector2D(640, 360));
-		agent->setMass(0.035);
+		agent->setMass(0.035f);
 		agent->loadSpriteTexture("../res/Fly.png", 2);
 		agents.push_back(agent);
 	}
@@ -21,16 +20,13 @@ SceneWander::SceneWander()
 	wanderDisplacementVector[10] = {};
 }
 
-SceneWander::~SceneWander()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneWander::~SceneWander(){
+	for (int i = 0; i < (int)agents.size(); i++){
 		delete agents[i];
 	}
 }
 
-void SceneWander::update(float dtime, SDL_Event *event)
-{
+void SceneWander::update(float dtime, SDL_Event *event){
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
@@ -39,7 +35,7 @@ void SceneWander::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		Vector2D velocity = agents[i]->getVelocity();
 		Vector2D position = agents[i]->getPosition();
 		float angle = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
@@ -58,12 +54,11 @@ void SceneWander::update(float dtime, SDL_Event *event)
 void SceneWander::draw()
 {
 	for (int i = 0; i < (int)agents.size(); i++) {
-		if (agents[i]->getDrawVector()) {
-			Vector2D position = agents[i]->getPosition();
-			draw_circle(TheApp::Instance()->getRenderer(), (int)wanderCircleCenter[i].x, (int)wanderCircleCenter[i].y, wanderCircleRadius, 255, 0, 0, 255);
-			draw_circle(TheApp::Instance()->getRenderer(), (int)wanderDisplacementVector[i].x, (int)wanderDisplacementVector[i].y, 5, 0, 255, 0, 125);
-			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(wanderDisplacementVector[i].x), (int)(wanderDisplacementVector[i].y));
-		}
+		Vector2D position = agents[i]->getPosition();
+		draw_circle(TheApp::Instance()->getRenderer(), (int)wanderCircleCenter[i].x, (int)wanderCircleCenter[i].y, wanderCircleRadius, 255, 0, 0, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), (int)wanderDisplacementVector[i].x, (int)wanderDisplacementVector[i].y, 5, 0, 255, 0, 125);
+		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(wanderDisplacementVector[i].x), (int)(wanderDisplacementVector[i].y));
+		
 		agents[i]->draw();
 	}
 }

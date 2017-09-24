@@ -59,6 +59,7 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneFlee;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_5) //Arrive
@@ -83,8 +84,8 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneWander;
-				SDL_Color color = { 255, 255, 255, 255 };
-				app->setBackgroundColor(color);
+				//SDL_Color color = { 255, 255, 255, 255 };
+				//app->setBackgroundColor(color);
 				app->setBackgroundImage("../res/PooBackground.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}

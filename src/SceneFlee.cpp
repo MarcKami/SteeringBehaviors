@@ -7,7 +7,7 @@ SceneFlee::SceneFlee()
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
-	agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/isaac.png", 3);
 	agents.push_back(agent);
 	Target *target = new Target;
 	target->loadSpriteTexture("../res/ghost.png", 24);

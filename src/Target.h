@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -23,9 +22,9 @@ private:
 
 public:
 	Target();
+	~Target();
 	Vector2D getPosition();
 	void setPosition(Vector2D position);
-	SDL_Texture* set_icon(SDL_Renderer *surface, char* filename, int _num_frames);
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	bool Target::loadSpriteTexture(char* filename, int num_frames = 1);

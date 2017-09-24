@@ -1,9 +1,4 @@
 #pragma once
-
-#include <iostream>
-#include <string>
-#include <SDL.h>
-#include <SDL_image.h>
 #include "Target.h"
 
 
@@ -18,6 +13,10 @@ Target::Target() :
 	draw_sprite(false)
 	{}
 
+Target::~Target() {
+	if (sprite_texture)
+		SDL_DestroyTexture(sprite_texture);
+}
 
 Vector2D Target::getPosition() {
 	return position;
