@@ -83,9 +83,6 @@
     <ClInclude Include="..\src\SceneKinematicSeek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\SceneSeek.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\SceneArrive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ScenePursue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SceneSeek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SceneWander.h">
