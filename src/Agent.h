@@ -23,6 +23,7 @@ private:
 	float orientation;
 	float max_force;
 	float max_velocity;
+	int currentTargetIndex;
 
 	SDL_Color color;
 
@@ -42,6 +43,8 @@ public:
 	Vector2D getVelocity();
 	float getMaxVelocity();
 	bool getDrawVector();
+	int getIndex();
+	void setIndex(int index);
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);

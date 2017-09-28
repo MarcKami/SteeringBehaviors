@@ -10,6 +10,7 @@ Agent::Agent() : sprite_texture(0),
 	             max_force(50),
 	             max_velocity(200),
 	             orientation(0),
+				 currentTargetIndex(0),
 	             color({ 255,255,255,255 }),
 				 sprite_num_frames(0),
 	             sprite_w(0),
@@ -49,6 +50,14 @@ float Agent::getMaxVelocity(){
 
 bool Agent::getDrawVector() {
 	return draw_vector;
+}
+
+int Agent::getIndex() {
+	return currentTargetIndex;
+}
+
+void Agent::setIndex(int index) {
+	currentTargetIndex = index;
 }
 
 void Agent::setPosition(Vector2D _position){
