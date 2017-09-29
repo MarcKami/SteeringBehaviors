@@ -10,7 +10,8 @@ Target::Target() :
 	sprite_w(0),
 	sprite_h(0),
 	color({ 255, 0, 0, 255 }),
-	draw_sprite(false)
+	draw_sprite(false),
+	slow(true)
 	{}
 
 Target::~Target() {
@@ -56,7 +57,7 @@ void Target::draw() {
 	if (draw_sprite) {
 		Uint32 sprite;
 
-		if (sprite_num_frames == 24) sprite = (int)(SDL_GetTicks() / 48) % sprite_num_frames;
+		if (slow) sprite = (int)(SDL_GetTicks() / 150) % sprite_num_frames;
 		else sprite = (int)(SDL_GetTicks() / 10) % sprite_num_frames;
 
 		SDL_Rect srcrect = { (int)sprite * sprite_w, 0, sprite_w, sprite_h };

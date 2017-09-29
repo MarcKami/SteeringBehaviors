@@ -12,12 +12,15 @@ Agent::Agent() : sprite_texture(0),
 	             orientation(0),
 				 currentTargetIndex(0),
 				 pathDir(1),
+				 neighborRadius(100),
 	             color({ 255,255,255,255 }),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
 				 draw_vector(false),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				 rotate(true),
+				 slow(false)
 {
 	steering_behavior = new SteeringBehavior;
 }
@@ -55,6 +58,14 @@ bool Agent::getDrawVector() {
 
 int Agent::getIndex() {
 	return currentTargetIndex;
+}
+
+void Agent::setRotate(bool rot) {
+	rotate = rot;
+}
+
+void Agent::setSlow(bool slo) {
+	slow = slo;
 }
 
 void Agent::setIndex(int index) {
@@ -100,8 +111,7 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event){
 	default:
 		break;
 	}
-
-
+	
 	Vector2D acceleration = steering_force / mass;
 	velocity = velocity + acceleration * dtime;
 	velocity = velocity.Truncate(max_velocity);
@@ -124,15 +134,18 @@ void Agent::draw(){
 	if (draw_sprite){
 		Uint32 sprite;
 				
-		if (velocity.Length() < 5.0)
-			sprite = 1;
-		else
-			sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
+		if (velocity.Length() < 5.0 && !slow)
+			sprite = 1;		
+		else {
+			if (slow) sprite = (int)(SDL_GetTicks() / 200) % sprite_num_frames;
+			else sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
+		}
+			
 
 		SDL_Rect srcrect = { (int)sprite * sprite_w, 0, sprite_w, sprite_h };
 		SDL_Rect dstrect = { (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), sprite_w, sprite_h };
 		SDL_Point center = { sprite_w / 2, sprite_h / 2 };
-		if (sprite_num_frames == 4 || sprite_num_frames == 2)	SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation + 90, &center, SDL_FLIP_NONE);
+		if (rotate)	SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation + 90, &center, SDL_FLIP_NONE);
 		else SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, 0, &center, SDL_FLIP_NONE);
 	}
 	else {

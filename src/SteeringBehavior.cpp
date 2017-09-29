@@ -102,13 +102,18 @@ Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window
 
 		return steeringForce * agent->max_force;
 	}
-	else {
+	else if (distance.Length() < radius && distance.Length() > 10){
 		steering *= (agent->max_velocity * factor);
 		steering = PerimeterAvoidance(agent, steering, window, border);
 		Vector2D steeringForce = (steering - agent->velocity);
 		steeringForce /= (agent->max_velocity * factor);
 
 		return steeringForce * agent->max_force;
+	}
+	else {
+		agent->setVelocity({ 0,0 });
+		Vector2D steeringForce = { 0,0 };
+		return steeringForce;
 	}
 }
 
@@ -164,6 +169,56 @@ Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, 
 	}
 
 	return Arrive(agent, path.pathArray[agent->currentTargetIndex], window, border, 50, dtime);
+}
+
+//Flocking Behavior
+Vector2D SteeringBehavior::FlockingFlee(Agent *agent, std::vector<Agent*> target) {
+	int neighborCount = 0;
+	Vector2D separationVector = {};
+	for (int i = 0; i < (int)target.size(); i++){
+		if (Vector2D().Distance(agent->position, target[i]->position) < agent->neighborRadius) {
+			separationVector += (agent->position - target[i]->position);
+			++neighborCount;
+		}
+	}
+	separationVector /= neighborCount;
+	return Vector2D().Normalize(separationVector);
+}
+
+Vector2D SteeringBehavior::FlockingSeek(Agent *agent, std::vector<Agent*> target) {
+	int neighborCount = 0;
+	Vector2D averageVector = {};
+	for (int i = 0; i < (int)target.size(); i++) {
+		if (Vector2D().Distance(agent->position, target[i]->position) < agent->neighborRadius) {
+			averageVector += target[i]->position;
+			++neighborCount;
+		}
+	}
+	averageVector /= neighborCount;
+	averageVector -= agent->position;
+	return Vector2D().Normalize(averageVector);
+}
+
+Vector2D SteeringBehavior::FlockingAlignment(Agent *agent, std::vector<Agent*> target) {
+	int neighborCount = 0;
+	Vector2D averageVelocity = {};
+	for (int i = 0; i < (int)target.size(); i++) {
+		if (Vector2D().Distance(agent->position, target[i]->position) < agent->neighborRadius) {
+			averageVelocity += target[i]->velocity;
+			++neighborCount;
+		}
+	}
+	averageVelocity /= neighborCount;
+	return Vector2D().Normalize(averageVelocity);
+}
+
+Vector2D SteeringBehavior::Flocking(Agent *agent, std::vector<Agent*> target, float kFlee, float kSeek, float kAligment, float kMaxFlocking, Vector2D window, int border, float dtime) {
+	Vector2D separationDirection = FlockingFlee(agent, target);
+	Vector2D cohesionDirection = FlockingSeek(agent, target);
+	Vector2D alignmentDirection = FlockingAlignment(agent, target);
+
+	Vector2D flockingForce = separationDirection * kFlee + cohesionDirection * kSeek + alignmentDirection * kAligment;
+	return flockingForce * kMaxFlocking;
 }
 
 

@@ -25,6 +25,7 @@ private:
 	float max_velocity;
 	int currentTargetIndex;
 	int pathDir;
+	int neighborRadius;
 
 	SDL_Color color;
 
@@ -34,6 +35,8 @@ private:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
+	bool rotate;
+	bool slow;
 
 public:
 	Agent();
@@ -45,6 +48,8 @@ public:
 	float getMaxVelocity();
 	bool getDrawVector();
 	int getIndex();
+	void setRotate(bool rot);
+	void setSlow(bool slo);
 	void setIndex(int index);
 	void setPathDir(int dir);
 	void setPosition(Vector2D position);

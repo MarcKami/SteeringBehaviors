@@ -9,6 +9,7 @@ ScenePathFollowing::ScenePathFollowing()
 	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->loadSpriteTexture("../res/isaac.png", 3);
+	agent->setRotate(false);
 	agents.push_back(agent);
 	target = Vector2D(640, 360);
 	//Path Definition

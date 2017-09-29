@@ -19,6 +19,7 @@ private:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
+	bool slow;
 
 public:
 	Target();

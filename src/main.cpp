@@ -13,6 +13,7 @@
 #include "SceneEvade.h"
 #include "SceneWander.h"
 #include "ScenePathFollowing.h"
+#include "SceneFlocking.h"
 
 
 using namespace std;
@@ -98,6 +99,13 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new ScenePathFollowing;
+				app->setBackgroundImage("../res/Room.png");
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_0) //Wander
+			{
+				delete(curr_scene);
+				curr_scene = new SceneFlocking;
 				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}

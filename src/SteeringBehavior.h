@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Agent.h"
 #include "Vector2D.h"
 
@@ -40,6 +41,12 @@ class SteeringBehavior{
 
 		//Path Following
 		Vector2D PathFollow(Agent *agent, Path path, Vector2D window, int border, float dtime);
+
+		//Flocking Behavior
+		Vector2D FlockingFlee(Agent *agent, std::vector<Agent*> target);
+		Vector2D FlockingSeek(Agent *agent, std::vector<Agent*> target);
+		Vector2D FlockingAlignment(Agent *agent, std::vector<Agent*> target);
+		Vector2D Flocking(Agent *agent, std::vector<Agent*> target, float kFlee, float kSeek, float kAligment, float kMaxFlocking, Vector2D window, int border, float dtime);
 
 
 };
