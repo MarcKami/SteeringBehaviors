@@ -37,7 +37,7 @@ class SteeringBehavior{
 		Vector2D Evade(Agent *agent, Agent *target, Vector2D window, int border, float dtime);
 
 		//Wander Behavior
-		Vector2D Wander(Agent *agent, Vector2D window, int border, float angle, float *wanderAngle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime);
+		Vector2D Wander(Agent *agent, Vector2D window, int border, float angle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime);
 
 		//Path Following
 		Vector2D PathFollow(Agent *agent, Path path, Vector2D window, int border, float dtime);

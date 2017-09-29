@@ -152,12 +152,12 @@ Vector2D SteeringBehavior::Evade(Agent *agent, Agent *target, Vector2D window, i
 
 
 //Wander Behavior
-Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, float angle, float *wanderAngle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime) {
-	Vector2D wanderCircleCenter = { agent->position.x + wanderCircleOffset*cos(angle * DEG2RAD), agent->position.y + wanderCircleOffset*sin(angle * DEG2RAD) };
-	*wanderAngle += (rand() % (wanderMaxChange * 2) - wanderMaxChange);
-	Vector2D randomSteering = { wanderCircleCenter.x + wanderCircleRadius*cos((*wanderAngle) * DEG2RAD), wanderCircleCenter.y + wanderCircleRadius*sin((*wanderAngle) * DEG2RAD) };
+Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, float angle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime) {
+	agent->wanderCircleCenter = { agent->position.x + wanderCircleOffset*cos(angle * DEG2RAD), agent->position.y + wanderCircleOffset*sin(angle * DEG2RAD) };
+	agent->wanderAngle += (rand() % (wanderMaxChange * 2) - wanderMaxChange);
+	agent->wanderDisplacementVector = { agent->wanderCircleCenter.x + wanderCircleRadius*cos((agent->wanderAngle) * DEG2RAD), agent->wanderCircleCenter.y + wanderCircleRadius*sin((agent->wanderAngle) * DEG2RAD) };
 
-	return Seek(agent, randomSteering, window, border, dtime);
+	return Seek(agent, agent->wanderDisplacementVector, window, border, dtime);
 }
 
 

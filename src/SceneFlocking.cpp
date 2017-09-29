@@ -30,6 +30,7 @@ SceneFlocking::SceneFlocking(){
 	kSeek = 0.3f;
 	kAlignment = 0.2f;
 	kMaxForce = 100;
+	draw_vector = true;
 	border = 75;
 	window = { 1280, 768 };
 }
@@ -81,7 +82,7 @@ void SceneFlocking::update(float dtime, SDL_Event *event){
 }
 
 void SceneFlocking::draw(){
-	if (agents[0]->getDrawVector()) draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
+	if (draw_vector) draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	leader.draw();
 	for (int i = 0; i < (int)agents.size(); i++) {
 		agents[i]->draw();

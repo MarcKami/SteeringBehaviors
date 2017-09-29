@@ -17,6 +17,7 @@ private:
 	std::vector<Agent*> agents;
 	Agent leader;
 	Vector2D target;
+	bool draw_vector;
 	int border;
 	Vector2D window;
 	float kFlee;

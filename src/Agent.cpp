@@ -13,11 +13,13 @@ Agent::Agent() : sprite_texture(0),
 				 currentTargetIndex(0),
 				 pathDir(1),
 				 neighborRadius(100),
+				 wanderAngle(0),
+				 wanderCircleCenter({0, 0}),
+				 wanderDisplacementVector({0, 0}),
 	             color({ 255,255,255,255 }),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-				 draw_vector(false),
 	             draw_sprite(false),
 				 rotate(true),
 				 slow(false)
@@ -48,12 +50,20 @@ Vector2D Agent::getVelocity(){
 	return velocity;
 }
 
-float Agent::getMaxVelocity(){
-	return max_velocity;
+Vector2D Agent::getWanderCircleCenter() {
+	return wanderCircleCenter;
 }
 
-bool Agent::getDrawVector() {
-	return draw_vector;
+Vector2D Agent::getWanderDisplacement() {
+	return wanderDisplacementVector;
+}
+
+float Agent::getWanderAngle() {
+	return wanderAngle;
+}
+
+float Agent::getMaxVelocity(){
+	return max_velocity;
 }
 
 int Agent::getIndex() {
@@ -88,6 +98,18 @@ void Agent::setVelocity(Vector2D _velocity){
 	velocity = _velocity;
 }
 
+void Agent::setWanderCircleCenter(Vector2D center) {
+	wanderCircleCenter = center;
+}
+
+void Agent::setWanderDisplacement(Vector2D displacement) {
+	wanderDisplacementVector = displacement;
+}
+
+void Agent::setWanderAngle(float wAngle) {
+	wanderAngle = wAngle;
+}
+
 void Agent::setMass(float _mass){
 	mass = _mass;
 }
@@ -105,8 +127,6 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event){
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_sprite = !draw_sprite;
-		if (event->key.keysym.scancode == SDL_SCANCODE_V)
-			draw_vector = !draw_vector;
 		break;
 	default:
 		break;
