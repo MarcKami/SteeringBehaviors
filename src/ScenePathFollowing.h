@@ -1,12 +1,8 @@
 #pragma once
 #include <vector>
 #include "Scene.h"
-#include "Agent.h"
+#include "SteeringBehavior.h"
 
-struct Path {
-	Vector2D pathArray[5];
-	float arrivalDistance;
-};
 
 class ScenePathFollowing :
 	public Scene

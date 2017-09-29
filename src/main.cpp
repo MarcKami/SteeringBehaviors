@@ -12,6 +12,7 @@
 #include "ScenePursue.h"
 #include "SceneEvade.h"
 #include "SceneWander.h"
+#include "ScenePathFollowing.h"
 
 
 using namespace std;
@@ -41,18 +42,21 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneKinematicSeek;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_2) //NormalFlee
 			{
 				delete(curr_scene);
 				curr_scene = new SceneKinematicFlee;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_3) //Seek
 			{
 				delete(curr_scene);
 				curr_scene = new SceneSeek;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_4) //Flee
@@ -66,27 +70,35 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneArrive;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_6) //Pursue
 			{
 				delete(curr_scene);
 				curr_scene = new ScenePursue;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_7) //Evade
 			{
 				delete(curr_scene);
 				curr_scene = new SceneEvade;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_8) //Wander
 			{
 				delete(curr_scene);
 				curr_scene = new SceneWander;
-				//SDL_Color color = { 255, 255, 255, 255 };
-				//app->setBackgroundColor(color);
 				app->setBackgroundImage("../res/PooBackground.png");
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_9) //Wander
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFollowing;
+				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))

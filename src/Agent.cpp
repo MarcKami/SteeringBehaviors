@@ -11,6 +11,7 @@ Agent::Agent() : sprite_texture(0),
 	             max_velocity(200),
 	             orientation(0),
 				 currentTargetIndex(0),
+				 pathDir(1),
 	             color({ 255,255,255,255 }),
 				 sprite_num_frames(0),
 	             sprite_w(0),
@@ -58,6 +59,10 @@ int Agent::getIndex() {
 
 void Agent::setIndex(int index) {
 	currentTargetIndex = index;
+}
+
+void Agent::setPathDir(int dir) {
+	pathDir = dir;
 }
 
 void Agent::setPosition(Vector2D _position){

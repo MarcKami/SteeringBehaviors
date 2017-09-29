@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 ScenePathFollowing::ScenePathFollowing()
 {
 	Agent *agent = new Agent;
@@ -42,16 +43,15 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	if (agents[0]->getPosition().Distance(agents[0]->getPosition(), myPath.pathArray[agents[0]->getIndex()]) < myPath.arrivalDistance) {
-		agents[0]->setIndex(agents[0]->getIndex() + 1);
-	}
-	Vector2D steering_force = agents[0]->Behavior()->Seek(agents[0], myPath.pathArray[agents[0]->getIndex()], dtime);
+	Vector2D steering_force = agents[0]->Behavior()->PathFollow(agents[0], myPath, dtime);
 	agents[0]->update(steering_force, dtime, event);
 }
 
 void ScenePathFollowing::draw()
 {
-	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
+	for (int i = 0; i < 5; i++){
+		draw_circle(TheApp::Instance()->getRenderer(), (int)myPath.pathArray[i].x, (int)myPath.pathArray[i].y, 15, 255, 0, 0, 255);
+	}
 	agents[0]->draw();
 }
 

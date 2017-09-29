@@ -24,6 +24,7 @@ private:
 	float max_force;
 	float max_velocity;
 	int currentTargetIndex;
+	int pathDir;
 
 	SDL_Color color;
 
@@ -45,6 +46,7 @@ public:
 	bool getDrawVector();
 	int getIndex();
 	void setIndex(int index);
+	void setPathDir(int dir);
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);

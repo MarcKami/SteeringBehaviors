@@ -2,6 +2,11 @@
 #include "Agent.h"
 #include "Vector2D.h"
 
+struct Path {
+	Vector2D pathArray[5];
+	float arrivalDistance;
+};
+
 class Agent;
 
 class SteeringBehavior{
@@ -29,5 +34,8 @@ class SteeringBehavior{
 
 		//Wander Behavior
 		Vector2D Wander(Agent *agent, float angle, float *wanderAngle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime);
+
+		//Path Following
+		Vector2D PathFollow(Agent *agent, Path path, float dtime);
 
 };
