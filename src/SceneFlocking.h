@@ -2,6 +2,7 @@
 #include <vector>
 #include "Scene.h"
 #include "Agent.h"
+#include "Target.h"
 
 class SceneFlocking :
 	public Scene
@@ -14,6 +15,7 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
+	Agent leader;
 	Vector2D target;
 	int border;
 	Vector2D window;

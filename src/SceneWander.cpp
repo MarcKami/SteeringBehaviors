@@ -15,7 +15,7 @@ SceneWander::SceneWander(){
 	wanderMaxChange = 90;
 	wanderCircleOffset = 250;
 	wanderCircleRadius = 100;
-	wanderAngle[10] = { 0.0f };
+	wanderAngle[10] = {};
 	wanderCircleCenter[10] = {};
 	wanderDisplacementVector[10] = {};
 	border = 75;

@@ -36,6 +36,7 @@ Vector2D SteeringBehavior::KinematicFlee(Agent *agent, Agent *target, float dtim
 	return KinematicFlee(agent, target->position, dtime);
 }
 
+
 //Perimeter Avoidance
 Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, Vector2D window, int border) {
 
@@ -50,6 +51,7 @@ Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, V
 
 	return steering;
 }
+
 
 //Seek & Flee Behaviors
 Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, Vector2D window, int border, float dtime)
@@ -102,18 +104,18 @@ Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window
 
 		return steeringForce * agent->max_force;
 	}
-	else if (distance.Length() < radius && distance.Length() > 10){
+	else if (distance.Length() < radius && agent->velocity.Length() < 0.2f){
+		agent->setVelocity({ 0,0 });
+		Vector2D steeringForce = { 0,0 };
+		return steeringForce;
+	}
+	else {
 		steering *= (agent->max_velocity * factor);
 		steering = PerimeterAvoidance(agent, steering, window, border);
 		Vector2D steeringForce = (steering - agent->velocity);
 		steeringForce /= (agent->max_velocity * factor);
 
 		return steeringForce * agent->max_force;
-	}
-	else {
-		agent->setVelocity({ 0,0 });
-		Vector2D steeringForce = { 0,0 };
-		return steeringForce;
 	}
 }
 
@@ -148,6 +150,7 @@ Vector2D SteeringBehavior::Evade(Agent *agent, Agent *target, Vector2D window, i
 	return Flee(agent, predictedSteering, window, border, dtime);
 }
 
+
 //Wander Behavior
 Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, float angle, float *wanderAngle, int wanderMaxChange, int wanderCircleOffset, int wanderCircleRadius, float dtime) {
 	Vector2D wanderCircleCenter = { agent->position.x + wanderCircleOffset*cos(angle * DEG2RAD), agent->position.y + wanderCircleOffset*sin(angle * DEG2RAD) };
@@ -156,6 +159,7 @@ Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, flo
 
 	return Seek(agent, randomSteering, window, border, dtime);
 }
+
 
 //Path Following Behavior
 Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, int border, float dtime) {
@@ -170,6 +174,7 @@ Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, 
 
 	return Arrive(agent, path.pathArray[agent->currentTargetIndex], window, border, 50, dtime);
 }
+
 
 //Flocking Behavior
 Vector2D SteeringBehavior::FlockingFlee(Agent *agent, std::vector<Agent*> target) {

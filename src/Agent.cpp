@@ -137,7 +137,7 @@ void Agent::draw(){
 		if (velocity.Length() < 5.0 && !slow)
 			sprite = 1;		
 		else {
-			if (slow) sprite = (int)(SDL_GetTicks() / 200) % sprite_num_frames;
+			if (slow) sprite = (int)(SDL_GetTicks() / 150) % sprite_num_frames;
 			else sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
 		}
 			

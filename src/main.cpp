@@ -95,14 +95,14 @@ int main(int argc, char ** argv)
 				app->setBackgroundImage("../res/PooBackground.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
-			if (event.key.keysym.scancode == SDL_SCANCODE_9) //Wander
+			if (event.key.keysym.scancode == SDL_SCANCODE_9) //PathFollow
 			{
 				delete(curr_scene);
 				curr_scene = new ScenePathFollowing;
 				app->setBackgroundImage("../res/Room.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
-			if (event.key.keysym.scancode == SDL_SCANCODE_0) //Wander
+			if (event.key.keysym.scancode == SDL_SCANCODE_0) //Flocking
 			{
 				delete(curr_scene);
 				curr_scene = new SceneFlocking;
