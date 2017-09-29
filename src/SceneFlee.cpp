@@ -12,6 +12,8 @@ SceneFlee::SceneFlee()
 	Target *target = new Target;
 	target->loadSpriteTexture("../res/ghost.png", 24);
 	targets.push_back(target);
+	border = 75;
+	window = { 1280, 768 };
 }
 
 SceneFlee::~SceneFlee()
@@ -41,7 +43,7 @@ void SceneFlee::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	Vector2D steering_force = agents[0]->Behavior()->Flee(agents[0],agents[0]->getTarget(),dtime);
+	Vector2D steering_force = agents[0]->Behavior()->Flee(agents[0],agents[0]->getTarget(), window, border, dtime);
 	agents[0]->update(steering_force, dtime, event);
 	targets[0]->update(dtime, event);
 }

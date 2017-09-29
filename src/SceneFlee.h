@@ -16,5 +16,7 @@ public:
 private:
 	std::vector<Agent*> agents;
 	std::vector<Target*> targets;
+	int border;
+	Vector2D window;
 };
 

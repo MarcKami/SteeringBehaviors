@@ -17,4 +17,6 @@ private:
 	std::vector<Agent*> agents;
 	Vector2D target;
 	Path myPath;
+	int border;
+	Vector2D window;
 };

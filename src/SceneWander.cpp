@@ -18,6 +18,8 @@ SceneWander::SceneWander(){
 	wanderAngle[10] = { 0.0f };
 	wanderCircleCenter[10] = {};
 	wanderDisplacementVector[10] = {};
+	border = 75;
+	window = { 1280, 768 };
 }
 
 SceneWander::~SceneWander(){
@@ -45,8 +47,7 @@ void SceneWander::update(float dtime, SDL_Event *event){
 		wanderDisplacementVector[i] = { wanderCircleCenter[i].x + wanderCircleRadius*cos(wanderAngle[i]*DEG2RAD), wanderCircleCenter[i].y + wanderCircleRadius*sin(wanderAngle[i]*DEG2RAD) };
 
 
-		Vector2D steering_force = agents[i]->Behavior()->Wander(agents[i], angle, &wanderAngle[i], wanderMaxChange,
-			wanderCircleOffset, wanderCircleRadius, dtime);
+		Vector2D steering_force = agents[i]->Behavior()->Wander(agents[i], window, border, angle, &wanderAngle[i], wanderMaxChange, wanderCircleOffset, wanderCircleRadius, dtime);
 		agents[i]->update(steering_force, dtime, event);
 	}
 }

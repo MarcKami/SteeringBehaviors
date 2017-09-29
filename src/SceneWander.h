@@ -15,6 +15,8 @@ public:
 private:
 	std::vector<Agent*> agents;
 	Vector2D target;
+	int border;
+	Vector2D window;
 public:
 	// Wander fields
 	int wanderMaxChange = 90;

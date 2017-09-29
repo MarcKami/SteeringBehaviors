@@ -16,6 +16,8 @@ ScenePursue::ScenePursue()
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent); 
 	target = Vector2D(900, 650);
+	border = 75;
+	window = { 1280, 768 };
 }
 
 ScenePursue::~ScenePursue()
@@ -43,9 +45,9 @@ void ScenePursue::update(float dtime, SDL_Event *event)
 	}
 
 	agents[0]->setTarget(agents[1]->getPosition());
-	Vector2D steering_force = agents[1]->Behavior()->Arrive(agents[1], agents[1]->getTarget(), 200, dtime);
+	Vector2D steering_force = agents[1]->Behavior()->Arrive(agents[1], agents[1]->getTarget(), window, border, 200, dtime);
 	agents[1]->update(steering_force, dtime, event);
-	steering_force = agents[0]->Behavior()->Pursue(agents[0], agents[1], dtime);
+	steering_force = agents[0]->Behavior()->Pursue(agents[0], agents[1], window, border, dtime);
 	agents[0]->update(steering_force, dtime, event);
 }
 

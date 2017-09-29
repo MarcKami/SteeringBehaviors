@@ -10,6 +10,8 @@ SceneArrive::SceneArrive()
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 	target = Vector2D(0, 0);
+	border = 75;
+	window = { 1280, 768 };
 }
 
 SceneArrive::~SceneArrive()
@@ -35,7 +37,7 @@ void SceneArrive::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	Vector2D steering_force = agents[0]->Behavior()->Arrive(agents[0], agents[0]->getTarget(), 150, dtime);
+	Vector2D steering_force = agents[0]->Behavior()->Arrive(agents[0], agents[0]->getTarget(), window, border, 150, dtime);
 	agents[0]->update(steering_force, dtime, event);
 }
 

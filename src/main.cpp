@@ -63,7 +63,7 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneFlee;
-				app->setBackgroundImage("../res/Room.png");
+				app->setBackgroundImage("../res/Room2.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_5) //Arrive

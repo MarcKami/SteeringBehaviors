@@ -18,6 +18,8 @@ ScenePathFollowing::ScenePathFollowing()
 	myPath.pathArray[2] = {780, 600};
 	myPath.pathArray[3] = {200, 600};
 	myPath.pathArray[4] = {400, 100};
+	border = 75;
+	window = { 1280, 768 };
 }
 
 ScenePathFollowing::~ScenePathFollowing()
@@ -43,7 +45,7 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	Vector2D steering_force = agents[0]->Behavior()->PathFollow(agents[0], myPath, dtime);
+	Vector2D steering_force = agents[0]->Behavior()->PathFollow(agents[0], myPath, window, border, dtime);
 	agents[0]->update(steering_force, dtime, event);
 }
 
