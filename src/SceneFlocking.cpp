@@ -63,7 +63,7 @@ void SceneFlocking::update(float dtime, SDL_Event *event){
 			agents.push_back(agent);
 		}
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_MINUS) {
-			agents.pop_back();
+			if (agents.size() > 1) agents.pop_back();
 		}
 		break;
 	default:

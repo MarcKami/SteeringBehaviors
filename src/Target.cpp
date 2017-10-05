@@ -38,9 +38,6 @@ void Target::update(float dtime, SDL_Event *event) {
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_sprite = !draw_sprite;
-		if (event->key.keysym.scancode == SDL_SCANCODE_V)
-			draw_vector = !draw_vector;
-		break;
 	default:
 		break;
 	}

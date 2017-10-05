@@ -6,19 +6,22 @@ using namespace std;
 ScenePathFollowing::ScenePathFollowing()
 {
 	Agent *agent = new Agent;
-	agent->setPosition(Vector2D(640, 360));
-	agent->setTarget(Vector2D(640, 360));
-	agent->loadSpriteTexture("../res/isaac.png", 3);
+	agent->setPosition(Vector2D(640, 330));
+	agent->setTarget(Vector2D(640, 330));
+	agent->loadSpriteTexture("../res/lazarus.png", 3);
 	agent->setRotate(false);
+	agent->setSlow(true);
 	agents.push_back(agent);
-	target = Vector2D(640, 360);
+
 	//Path Definition
 	myPath.arrivalDistance = 10.0f;
-	myPath.pathArray[0] = {640, 360};
-	myPath.pathArray[1] = {780, 360};
-	myPath.pathArray[2] = {780, 600};
-	myPath.pathArray[3] = {200, 600};
-	myPath.pathArray[4] = {400, 100};
+	myPath.pathArray[0] = {640, 330};
+	myPath.pathArray[1] = {780, 330};
+	myPath.pathArray[2] = {780, 570};
+	myPath.pathArray[3] = {200, 570};
+	myPath.pathArray[4] = {400, 70};
+
+	draw_vector = false;
 	border = 75;
 	window = { 1280, 768 };
 }
@@ -37,11 +40,10 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			target = Vector2D((float)(event->button.x), (float)(event->button.y));
-			agents[0]->setTarget(target);
-		}
+		break;
+	case SDL_KEYDOWN:
+		if (event->key.keysym.scancode == SDL_SCANCODE_V)
+			draw_vector = !draw_vector;
 		break;
 	default:
 		break;
@@ -52,8 +54,10 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 
 void ScenePathFollowing::draw()
 {
-	for (int i = 0; i < 5; i++){
-		draw_circle(TheApp::Instance()->getRenderer(), (int)myPath.pathArray[i].x, (int)myPath.pathArray[i].y, 15, 255, 0, 0, 255);
+	if (draw_vector) {
+		for (int i = 0; i < 5; i++) {
+			draw_circle(TheApp::Instance()->getRenderer(), (int)myPath.pathArray[i].x, (int)myPath.pathArray[i].y + 20, 15, 255, 0, 0, 255);
+		}
 	}
 	agents[0]->draw();
 }

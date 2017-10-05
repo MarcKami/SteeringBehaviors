@@ -8,12 +8,15 @@ ScenePursue::ScenePursue()
 	agent->setTarget(Vector2D(100, 100));
 	agent->setMass(0.6f);
 	agent->setColor(0,0,255,255);
-	agent->loadSpriteTexture("../res/zombie1.png", 8);
+	agent->loadSpriteTexture("../res/ghost2.png", 4);
+	agent->setRotate(false);
+	agent->setSlow(true);
 	agents.push_back(agent);
 	agent = new Agent();
 	agent->setPosition(Vector2D(600,50));
 	agent->setTarget(Vector2D(900, 650));
-	agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/isaac.png", 3);
+	agent->setRotate(false);
 	agents.push_back(agent); 
 	target = Vector2D(900, 650);
 	border = 75;

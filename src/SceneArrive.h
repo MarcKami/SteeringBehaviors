@@ -2,6 +2,7 @@
 #include <vector>
 #include "Scene.h"
 #include "Agent.h"
+#include "Target.h"
 
 class SceneArrive :
 	public Scene
@@ -14,7 +15,10 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
+	std::vector<Target*> targets;
 	Vector2D target;
+	bool draw_vector;
+	bool reached;
 	int border;
 	Vector2D window;
 };

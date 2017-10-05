@@ -10,9 +10,11 @@ SceneFlee::SceneFlee()
 	agent->loadSpriteTexture("../res/isaac.png", 3);
 	agent->setRotate(false);
 	agents.push_back(agent);
+
 	Target *target = new Target;
 	target->loadSpriteTexture("../res/ghost2.png", 4);
 	targets.push_back(target);
+
 	border = 75;
 	window = { 1280, 768 };
 }

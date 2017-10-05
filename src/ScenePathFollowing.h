@@ -15,8 +15,8 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
-	Vector2D target;
 	Path myPath;
+	bool draw_vector;
 	int border;
 	Vector2D window;
 };
