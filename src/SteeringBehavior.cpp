@@ -216,4 +216,33 @@ Vector2D SteeringBehavior::Flocking(Agent *agent, std::vector<Agent*> target, fl
 }
 
 
+//Collision Avoidance
+Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Target*> obstacles, Vector2D window, int border, float dtime) {
+	Vector2D nearestTarget;
+	float shortestDistance = INT_MAX;
+	bool collisionDetected = false;
+	int wanderCircleOffset = 150;
+
+	float angle = (float)(atan2(agent[0].velocity.y, agent[0].velocity.x) * RAD2DEG);
+	Vector2D coneHeight = { agent[0].position.x + wanderCircleOffset*cos(angle * DEG2RAD), agent[0].position.y + wanderCircleOffset*sin(angle * DEG2RAD) };
+
+	draw_circle(TheApp::Instance()->getRenderer(), (int)coneHeight.x, (int)coneHeight.y, 5, 0, 255, 0, 125);
+
+	for (int i = 0; i < (int)obstacles.size(); i++){
+		if (Vector2DUtils::IsInsideCone(obstacles[i]->getPosition(), agent[0].position, coneHeight, 20.f)){
+			float currDist = Vector2D::Distance(agent[0].position, obstacles[i]->getPosition());
+			if (currDist < shortestDistance)
+			{
+				nearestTarget = obstacles[i]->getPosition();
+				shortestDistance = currDist;
+				collisionDetected = true;
+			}
+		}
+	}
+	if (collisionDetected == true) return Flee(agent, nearestTarget, window, border, dtime);
+	else return { 0,0 };
+
+}
+
+
 

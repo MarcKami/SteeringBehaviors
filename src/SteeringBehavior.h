@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Agent.h"
+#include "Target.h"
 #include "Vector2D.h"
 
 struct Path {
@@ -98,6 +99,9 @@ class SteeringBehavior{
 		Vector2D FlockingSeek(Agent *agent, std::vector<Agent*> target);
 		Vector2D FlockingAlignment(Agent *agent, std::vector<Agent*> target);
 		Vector2D Flocking(Agent *agent, std::vector<Agent*> target, float kFlee, float kSeek, float kAligment, float kMaxFlocking, Vector2D window, int border, float dtime);
+
+		//Collision Avoidance
+		Vector2D CollisionAvoidance(Agent *agent, std::vector<Target*> obstacle, Vector2D window, int border, float dtime);
 
 
 };
