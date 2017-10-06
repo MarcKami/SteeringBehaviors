@@ -151,6 +151,7 @@ Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, flo
 
 //Path Following Behavior
 Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, int border, float dtime) {
+	
 	if (Vector2D().Distance(agent->position, path.pathArray[agent->currentTargetIndex]) < path.arrivalDistance) {
 		agent->setIndex(agent->currentTargetIndex + agent->pathDir);
 

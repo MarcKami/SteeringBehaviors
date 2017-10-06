@@ -40,6 +40,10 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
+		if (event->button.button == SDL_BUTTON_LEFT)
+		{
+			agents[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
+		}
 		break;
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_V)
