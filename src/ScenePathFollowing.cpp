@@ -43,6 +43,7 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			agents[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			agents[0]->setIndex(myPath.GetParam(agents[0]->getPosition()));
 		}
 		break;
 	case SDL_KEYDOWN:

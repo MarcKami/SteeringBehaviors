@@ -67,7 +67,7 @@ void SceneCollisionAvoidance::update(float dtime, SDL_Event *event){
 		break;
 	}
 
-	Vector2D steering_force = agents[0]->Behavior()->Seek(agents[0], agents[0]->getTarget(), window, border, dtime);
+	Vector2D steering_force = agents[0]->Behavior()->Arrive(agents[0], agents[0]->getTarget(), window, border, 200, dtime);
 	Vector2D avoidance_force = agents[0]->Behavior()->CollisionAvoidance(agents[0], obstacles, window, border, dtime);
 	steering_force += avoidance_force;
 	agents[0]->update(steering_force, dtime, event);

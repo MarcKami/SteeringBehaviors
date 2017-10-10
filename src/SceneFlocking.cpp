@@ -54,16 +54,18 @@ void SceneFlocking::update(float dtime, SDL_Event *event){
 		break;
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_PLUS){
-			Agent *agent = new Agent;
-			agent->setPosition(Vector2D(600, 400));
-			agent->setTarget(leader.getPosition());
-			agent->loadSpriteTexture("../res/poo.png", 3);
-			agent->setRotate(false);
-			agent->setSlow(true);
-			agents.push_back(agent);
+			if (agents.size() < 10) { //Set the Max number of agents
+				Agent *agent = new Agent;
+				agent->setPosition(Vector2D(600, 400));
+				agent->setTarget(leader.getPosition());
+				agent->loadSpriteTexture("../res/poo.png", 3);
+				agent->setRotate(false);
+				agent->setSlow(true);
+				agents.push_back(agent);
+			}
 		}
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_MINUS) {
-			if (agents.size() > 1) agents.pop_back();
+			if (agents.size() > 1) agents.pop_back(); //Set the Min number of agents
 		}
 		break;
 	default:

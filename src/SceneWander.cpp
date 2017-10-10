@@ -39,15 +39,17 @@ void SceneWander::update(float dtime, SDL_Event *event){
 		break;
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_PLUS) {
-			Agent *agent = new Agent;
-			agent->setPosition(Vector2D(640, 360));
-			agent->setTarget(Vector2D(640, 360));
-			agent->setMass(0.035f);
-			agent->loadSpriteTexture("../res/Fly.png", 2);
-			agents.push_back(agent);
+			if (agents.size() < 15) { //Set the Max number of agents
+				Agent *agent = new Agent;
+				agent->setPosition(Vector2D(640, 360));
+				agent->setTarget(Vector2D(640, 360));
+				agent->setMass(0.035f);
+				agent->loadSpriteTexture("../res/Fly.png", 2);
+				agents.push_back(agent);
+			}
 		}
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_MINUS) {
-			if (agents.size() > 1) agents.pop_back();
+			if (agents.size() > 1) agents.pop_back(); //Set the Min number of agents
 		}
 		if (event->key.keysym.scancode == SDL_SCANCODE_V)
 			draw_vector = !draw_vector;

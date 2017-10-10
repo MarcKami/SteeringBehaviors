@@ -7,57 +7,26 @@
 struct Path {
 	Vector2D pathArray[5];
 	float arrivalDistance;
-	Vector2D GetPosition(float param) {
-		int index = trunc(param * 4);
-		double decimal = (param * 4) - index;
-		//For take only 1 decimals(put more 0 to take more decimals)
-		int temp = 10 * decimal;
-		if (index < 4) {
-			Vector2D position = pathArray[index] + (((pathArray[index + 1] - pathArray[index]) / 10) * temp);
-			return position;
-		}
-		else {
-			return pathArray[index];
-		}
+	Vector2D GetPosition(int param) {
+		return pathArray[param];
 	}
 
-	float GetParam(Vector2D position) {
+	int GetParam(Vector2D position) {
 		//Augment the array if the path have more points
 		float distance[5];
 		int nearest = 0;
-		int nearest2 = 1;
 		float maxDistance = INT_MAX;
 		for (int i = 0; i < 5; i++) {
 			distance[i] = Vector2D::Distance(position, pathArray[i]);
 
 			if (distance[i] < maxDistance) {
-				nearest2 = nearest;
 				nearest = i;
 				maxDistance = distance[i];
 			}
 		}
-		if (abs(nearest - nearest2) == 1) {
-			Vector2D nPositions[10];
-			float nDistances[10];
-			int near = 0;
-			float nMaxDistance = INT_MAX;
-			for (int i = 0; i < 10; i++) {
-				nPositions[i] = pathArray[nearest] + (((pathArray[nearest2] - pathArray[nearest]) / 10) * i);
-				nDistances[i] = Vector2D::Distance(position, nPositions[i]);
-				if (nDistances[i] < nMaxDistance) {
-					near = i;
-					nMaxDistance = nDistances[i];
-				}
-			}
-
-			float myNear = near*1.0 / 10;
-			myNear += nearest;
-			return myNear;
-		}
-		else {
-			return (float)nearest;
-		}
+		return nearest;
 	}
+
 };
 
 class Agent;

@@ -28,8 +28,8 @@ int main(int argc, char ** argv)
 
 	SDL_SimpleApp *app = SDL_SimpleApp::Instance();
 
-	Scene *curr_scene = new SceneKinematicSeek;
-	app->setBackgroundImage("../res/Room.png");
+	Scene *curr_scene = new SceneSeek;
+	app->setBackgroundImage("../res/Room3.png");
 	app->setWindowTitle(curr_scene->getTitle());
 
 	while (!quit)
@@ -90,18 +90,18 @@ int main(int argc, char ** argv)
 				app->setBackgroundImage("../res/Room4.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
-			if (event.key.keysym.scancode == SDL_SCANCODE_8) //Collision Avoidance
-			{
-				delete(curr_scene);
-				curr_scene = new SceneCollisionAvoidance;
-				app->setBackgroundImage("../res/Room3.png");
-				app->setWindowTitle(curr_scene->getTitle());
-			}
-			if (event.key.keysym.scancode == SDL_SCANCODE_9) //PathFollow
+			if (event.key.keysym.scancode == SDL_SCANCODE_8) //PathFollow
 			{
 				delete(curr_scene);
 				curr_scene = new ScenePathFollowing;
 				app->setBackgroundImage("../res/Room5.png");
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_9) //Collision Avoidance
+			{
+				delete(curr_scene);
+				curr_scene = new SceneCollisionAvoidance;
+				app->setBackgroundImage("../res/Room3.png");
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_0) //Flocking ** Empty **

@@ -51,14 +51,21 @@ Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, V
 
 //Seek & Flee Behaviors
 Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, Vector2D window, int border, float dtime){
-	Vector2D steering = target - agent->position;
-	steering.Normalize();
-	steering *= agent->max_velocity;
-	steering = PerimeterAvoidance(agent, steering, window, border);
-	Vector2D steeringForce = (steering - agent->velocity);
-	steeringForce /= agent->max_velocity;
+	if (Vector2D::Distance(target, agent->position) < 5) {
+		agent->setVelocity({ 0,0 });
+		Vector2D steeringForce = { 0,0 };
+		return steeringForce;
+	}
+	else {
+		Vector2D steering = target - agent->position;
+		steering.Normalize();
+		steering *= agent->max_velocity;
+		steering = PerimeterAvoidance(agent, steering, window, border);
+		Vector2D steeringForce = (steering - agent->velocity);
+		steeringForce /= agent->max_velocity;
 
-	return steeringForce * agent->max_force;
+		return steeringForce * agent->max_force;
+	}
 }
 
 Vector2D SteeringBehavior::Seek(Agent *agent, Agent *target, Vector2D window, int border, float dtime){
@@ -87,7 +94,7 @@ Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window
 	Vector2D distance = steering;
 	float factor = distance.Length() / radius;
 	steering.Normalize();
-	if (distance.Length() > radius) {
+	if (distance.Length() > radius || agent->velocity.Length() == 0.f) {
 		steering *= agent->max_velocity;
 		steering = PerimeterAvoidance(agent, steering, window, border);
 		Vector2D steeringForce = (steering - agent->velocity);
@@ -231,8 +238,7 @@ Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Target*>
 	for (int i = 0; i < (int)obstacles.size(); i++){
 		if (Vector2DUtils::IsInsideCone(obstacles[i]->getPosition(), agent[0].position, coneHeight, 20.f)){
 			float currDist = Vector2D::Distance(agent[0].position, obstacles[i]->getPosition());
-			if (currDist < shortestDistance)
-			{
+			if (currDist < shortestDistance){
 				nearestTarget = obstacles[i]->getPosition();
 				shortestDistance = currDist;
 				collisionDetected = true;
