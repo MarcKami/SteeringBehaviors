@@ -11,7 +11,7 @@ Target::Target() :
 	sprite_h(0),
 	color({ 255, 0, 0, 255 }),
 	draw_sprite(false),
-	slow(true)
+	slow(false)
 	{}
 
 Target::~Target() {

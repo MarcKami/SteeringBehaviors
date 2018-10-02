@@ -51,8 +51,8 @@ void SceneWander::update(float dtime, SDL_Event *event){
 		if (event->key.keysym.scancode == SDL_SCANCODE_KP_MINUS) {
 			if (agents.size() > 1) agents.pop_back(); //Set the Min number of agents
 		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_V)
-			draw_vector = !draw_vector;
+		/*if (event->key.keysym.scancode == SDL_SCANCODE_V)
+			draw_vector = !draw_vector;*/
 		break;
 	default:
 		break;
