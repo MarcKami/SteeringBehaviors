@@ -21,7 +21,7 @@ using namespace std;
 
 int main(int argc, char ** argv)
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	bool quit = false;
 	SDL_Event event;

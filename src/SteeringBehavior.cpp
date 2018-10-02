@@ -182,7 +182,7 @@ Vector2D SteeringBehavior::FlockingFlee(Agent *agent, std::vector<Agent*> target
 			++neighborCount;
 		}
 	}
-	separationVector /= neighborCount;
+	separationVector /= (float)neighborCount;
 	return Vector2D().Normalize(separationVector);
 }
 
@@ -195,7 +195,7 @@ Vector2D SteeringBehavior::FlockingSeek(Agent *agent, std::vector<Agent*> target
 			++neighborCount;
 		}
 	}
-	averageVector /= neighborCount;
+	averageVector /= (float)neighborCount;
 	averageVector -= agent->position;
 	return Vector2D().Normalize(averageVector);
 }
@@ -209,7 +209,7 @@ Vector2D SteeringBehavior::FlockingAlignment(Agent *agent, std::vector<Agent*> t
 			++neighborCount;
 		}
 	}
-	averageVelocity /= neighborCount;
+	averageVelocity /= (float)neighborCount;
 	return Vector2D().Normalize(averageVelocity);
 }
 
@@ -226,7 +226,7 @@ Vector2D SteeringBehavior::Flocking(Agent *agent, std::vector<Agent*> target, fl
 //Collision Avoidance
 Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Target*> obstacles, Vector2D window, int border, float dtime) {
 	Vector2D nearestTarget;
-	float shortestDistance = INT_MAX;
+	float shortestDistance = (float)INT_MAX;
 	bool collisionDetected = false;
 	int wanderCircleOffset = 150;
 

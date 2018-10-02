@@ -15,7 +15,7 @@ struct Path {
 		//Augment the array if the path have more points
 		float distance[5];
 		int nearest = 0;
-		float maxDistance = INT_MAX;
+		float maxDistance = (float)INT_MAX;
 		for (int i = 0; i < 5; i++) {
 			distance[i] = Vector2D::Distance(position, pathArray[i]);
 
