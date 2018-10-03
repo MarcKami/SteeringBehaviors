@@ -23,11 +23,9 @@ Vector2D Target::getPosition() {
 	return position;
 }
 
-
 void Target::setPosition(Vector2D _position) {
 	position = _position;
 }
-
 
 void Target::update(float dtime, SDL_Event *event) {
 
@@ -49,7 +47,6 @@ void Target::update(float dtime, SDL_Event *event) {
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
 }
 
-
 void Target::draw() {
 	if (draw_sprite) {
 		Uint32 sprite;
@@ -66,7 +63,6 @@ void Target::draw() {
 		draw_circle(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, 15, color.r, color.g, color.b, color.a);
 	}
 }
-
 
 bool Target::loadSpriteTexture(char* filename, int _num_frames) {
 	if (_num_frames < 1) return false;

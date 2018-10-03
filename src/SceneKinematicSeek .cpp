@@ -1,10 +1,8 @@
-
 #include "SceneKinematicSeek.h"
 
 using namespace std;
 
-SceneKinematicSeek::SceneKinematicSeek()
-{
+SceneKinematicSeek::SceneKinematicSeek() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
@@ -13,22 +11,18 @@ SceneKinematicSeek::SceneKinematicSeek()
 	target = Vector2D(640, 360);
 }
 
-SceneKinematicSeek::~SceneKinematicSeek()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneKinematicSeek::~SceneKinematicSeek() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
 }
 
-void SceneKinematicSeek::update(float dtime, SDL_Event *event)
-{
+void SceneKinematicSeek::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
 			agents[0]->setTarget(target);
 		}
@@ -40,13 +34,11 @@ void SceneKinematicSeek::update(float dtime, SDL_Event *event)
 	agents[0]->update(steering_force, dtime, event);
 }
 
-void SceneKinematicSeek::draw()
-{
+void SceneKinematicSeek::draw() {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	agents[0]->draw();
 }
 
-const char* SceneKinematicSeek::getTitle()
-{
+const char* SceneKinematicSeek::getTitle() {
 	return "SDL Steering Behaviors :: KinematicSeek Demo";
 }

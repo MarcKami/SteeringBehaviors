@@ -39,43 +39,36 @@ std::string getResourcePath(const std::string &subDir = "") {
 }
 
 
-void set_pixel(SDL_Renderer *rend, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
-{
+void set_pixel(SDL_Renderer *rend, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 	SDL_SetRenderDrawColor(rend, r, g, b, a);
 	SDL_RenderDrawPoint(rend, x, y);
 }
 
-void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
-{
+void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 	if (rad < 3) return;
 
-	for (int radius = rad - 2; radius <= rad; radius++)
-	{
+	for (int radius = rad - 2; radius <= rad; radius++) {
 		double error = (double)-radius;
 		double x = (double)radius - 0.5;
 		double y = (double)0.5;
 		double cx = n_cx - 0.5;
 		double cy = n_cy - 0.5;
 
-		while (x >= y)
-		{
+		while (x >= y) {
 			set_pixel(surface, (int)(cx + x), (int)(cy + y), r, g, b, a);
 			set_pixel(surface, (int)(cx + y), (int)(cy + x), r, g, b, a);
 
-			if (x != 0)
-			{
+			if (x != 0) {
 				set_pixel(surface, (int)(cx - x), (int)(cy + y), r, g, b, a);
 				set_pixel(surface, (int)(cx + y), (int)(cy - x), r, g, b, a);
 			}
 
-			if (y != 0)
-			{
+			if (y != 0) {
 				set_pixel(surface, (int)(cx + x), (int)(cy - y), r, g, b, a);
 				set_pixel(surface, (int)(cx - y), (int)(cy + x), r, g, b, a);
 			}
 
-			if (x != 0 && y != 0)
-			{
+			if (x != 0 && y != 0) {
 				set_pixel(surface, (int)(cx - x), (int)(cy - y), r, g, b, a);
 				set_pixel(surface, (int)(cx - y), (int)(cy - x), r, g, b, a);
 			}
@@ -84,8 +77,7 @@ void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Ui
 			++y;
 			error += y;
 
-			if (error >= 0)
-			{
+			if (error >= 0) {
 				--x;
 				error -= x;
 				error -= x;

@@ -1,3 +1,18 @@
+/**
+* Agent
+*
+* Agent 
+*
+* @package		Template
+* @author		Marc Martos Cabré <marc.kami1991@gmail.com>
+* @copyright	Copyright (C) 2018 - 2019, Marc Martos Cabré
+* @license		link to license
+* @link			link to package or project
+* @since		Version 1.0
+*/
+
+//-----------------------------------------------------------------------
+
 #include "Agent.h"
 
 using namespace std;
@@ -22,31 +37,31 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false),
 				 rotate(true),
-				 slow(false)
+				 slow(false) 
 {
 	steering_behavior = new SteeringBehavior;
 }
 
-Agent::~Agent(){
+Agent::~Agent() {
 	if (sprite_texture)
 		SDL_DestroyTexture(sprite_texture);
 	if (steering_behavior)
 		delete (steering_behavior);
 }
 
-SteeringBehavior * Agent::Behavior(){
+SteeringBehavior * Agent::Behavior() {
 	return steering_behavior;
 }
 
-Vector2D Agent::getPosition(){
+Vector2D Agent::getPosition() {
 	return position;
 }
 
-Vector2D Agent::getTarget(){
+Vector2D Agent::getTarget() {
 	return target;
 }
 
-Vector2D Agent::getVelocity(){
+Vector2D Agent::getVelocity() {
 	return velocity;
 }
 
@@ -62,7 +77,7 @@ float Agent::getWanderAngle() {
 	return wanderAngle;
 }
 
-float Agent::getMaxVelocity(){
+float Agent::getMaxVelocity() {
 	return max_velocity;
 }
 
@@ -86,15 +101,15 @@ void Agent::setPathDir(int dir) {
 	pathDir = dir;
 }
 
-void Agent::setPosition(Vector2D _position){
+void Agent::setPosition(Vector2D _position) {
 	position = _position;
 }
 
-void Agent::setTarget(Vector2D _target){
+void Agent::setTarget(Vector2D _target) {
 	target = _target;
 }
 
-void Agent::setVelocity(Vector2D _velocity){
+void Agent::setVelocity(Vector2D _velocity) {
 	velocity = _velocity;
 }
 
@@ -110,15 +125,15 @@ void Agent::setWanderAngle(float wAngle) {
 	wanderAngle = wAngle;
 }
 
-void Agent::setMass(float _mass){
+void Agent::setMass(float _mass) {
 	mass = _mass;
 }
 
-void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 	color = { r, g, b, a };
 }
 
-void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event){
+void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event) {
 
 	//cout << "agent update:" << endl;
 
@@ -142,7 +157,6 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event){
 	// Update orientation
 	orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
 
-
 	// Trim position values to window size
 	if (position.x < 0) position.x = TheApp::Instance()->getWinSize().x;
 	if (position.y < 0) position.y = TheApp::Instance()->getWinSize().y;
@@ -150,8 +164,8 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event){
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
 }
 
-void Agent::draw(){
-	if (draw_sprite){
+void Agent::draw() {
+	if (draw_sprite) {
 		Uint32 sprite;
 				
 		if (velocity.Length() < 5.0 && !slow)
@@ -161,7 +175,6 @@ void Agent::draw(){
 			else sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
 		}
 			
-
 		SDL_Rect srcrect = { (int)sprite * sprite_w, 0, sprite_w, sprite_h };
 		SDL_Rect dstrect = { (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), sprite_w, sprite_h };
 		SDL_Point center = { sprite_w / 2, sprite_h / 2 };
@@ -174,7 +187,7 @@ void Agent::draw(){
 	}
 }
 
-bool Agent::loadSpriteTexture(char* filename, int _num_frames){
+bool Agent::loadSpriteTexture(char* filename, int _num_frames) {
 	if (_num_frames < 1) return false;
 
 	SDL_Surface *image = IMG_Load(filename);

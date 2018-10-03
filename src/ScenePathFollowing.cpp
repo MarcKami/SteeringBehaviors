@@ -2,9 +2,7 @@
 
 using namespace std;
 
-
-ScenePathFollowing::ScenePathFollowing()
-{
+ScenePathFollowing::ScenePathFollowing() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640, 330));
 	agent->setTarget(Vector2D(640, 330));
@@ -26,22 +24,18 @@ ScenePathFollowing::ScenePathFollowing()
 	window = { 1280, 768 };
 }
 
-ScenePathFollowing::~ScenePathFollowing()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+ScenePathFollowing::~ScenePathFollowing() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
 }
 
-void ScenePathFollowing::update(float dtime, SDL_Event *event)
-{
+void ScenePathFollowing::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			agents[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			agents[0]->setIndex(myPath.GetParam(agents[0]->getPosition()));
 		}
@@ -57,8 +51,7 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	agents[0]->update(steering_force, dtime, event);
 }
 
-void ScenePathFollowing::draw()
-{
+void ScenePathFollowing::draw() {
 	if (draw_vector) {
 		for (int i = 0; i < 5; i++) {
 			draw_circle(TheApp::Instance()->getRenderer(), (int)myPath.pathArray[i].x, (int)myPath.pathArray[i].y + 20, 15, 255, 0, 0, 255);
@@ -67,7 +60,6 @@ void ScenePathFollowing::draw()
 	agents[0]->draw();
 }
 
-const char* ScenePathFollowing::getTitle()
-{
+const char* ScenePathFollowing::getTitle() {
 	return "SDL Steering Behaviors :: Path Following Demo";
 }

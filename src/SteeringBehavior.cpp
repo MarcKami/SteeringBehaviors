@@ -2,40 +2,35 @@
 
 
 
-SteeringBehavior::SteeringBehavior()
-{
-}
+SteeringBehavior::SteeringBehavior() {}
 
-SteeringBehavior::~SteeringBehavior()
-{
-}
+SteeringBehavior::~SteeringBehavior() {}
 
-Vector2D SteeringBehavior::KinematicSeek(Agent *agent, Vector2D target, float dtime){
+Vector2D SteeringBehavior::KinematicSeek(Agent *agent, Vector2D target, float dtime) {
 	Vector2D steering = target - agent->position;
 	steering.Normalize();
 
 	return steering * agent->max_velocity;
 }
 
-Vector2D SteeringBehavior::KinematicSeek(Agent *agent, Agent *target, float dtime){
+Vector2D SteeringBehavior::KinematicSeek(Agent *agent, Agent *target, float dtime) {
 	return KinematicSeek(agent, target->position, dtime);
 }
 
-Vector2D SteeringBehavior::KinematicFlee(Agent *agent, Vector2D target, float dtime){
+Vector2D SteeringBehavior::KinematicFlee(Agent *agent, Vector2D target, float dtime) {
 	Vector2D steering = agent->position - target;
 	steering.Normalize();
 
 	return steering * agent->max_velocity;
 }
 
-Vector2D SteeringBehavior::KinematicFlee(Agent *agent, Agent *target, float dtime){
+Vector2D SteeringBehavior::KinematicFlee(Agent *agent, Agent *target, float dtime) {
 	return KinematicFlee(agent, target->position, dtime);
 }
 
 
 //Perimeter Avoidance
-Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, Vector2D window, int border){
-
+Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, Vector2D window, int border) {
 	if (agent->position.x < border)
 		steering.x = agent->max_velocity;
 	else if (agent->position.x > window.x - border)
@@ -50,7 +45,7 @@ Vector2D SteeringBehavior::PerimeterAvoidance(Agent *agent, Vector2D steering, V
 
 
 //Seek & Flee Behaviors
-Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, Vector2D window, int border, float dtime) {
 	if (Vector2D::Distance(target, agent->position) < 5) {
 		agent->setVelocity({ 0,0 });
 		Vector2D steeringForce = { 0,0 };
@@ -68,11 +63,11 @@ Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, Vector2D window, 
 	}
 }
 
-Vector2D SteeringBehavior::Seek(Agent *agent, Agent *target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Seek(Agent *agent, Agent *target, Vector2D window, int border, float dtime) {
 	return Seek(agent, target->position, window, border, dtime);
 }
 
-Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, Vector2D window, int border, float dtime) {
 	Vector2D steering = agent->position - target;
 	steering.Normalize();
 	steering *= agent->max_velocity;
@@ -83,13 +78,13 @@ Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, Vector2D window, 
 	return steeringForce * agent->max_force;
 }
 
-Vector2D SteeringBehavior::Flee(Agent *agent, Agent *target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Flee(Agent *agent, Agent *target, Vector2D window, int border, float dtime) {
 	return Flee(agent, target->position, window, border, dtime);
 }
 
 
 //Arrive Behavior
-Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window, int border, float radius, float dtime){
+Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window, int border, float radius, float dtime) {
 	Vector2D steering = target - agent->position;
 	Vector2D distance = steering;
 	float factor = distance.Length() / radius;
@@ -102,7 +97,7 @@ Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window
 
 		return steeringForce * agent->max_force;
 	}
-	else if (distance.Length() < radius && agent->velocity.Length() < 0.4f){
+	else if (distance.Length() < radius && agent->velocity.Length() < 0.4f) {
 		agent->setVelocity({ 0,0 });
 		Vector2D steeringForce = { 0,0 };
 		return steeringForce;
@@ -117,13 +112,13 @@ Vector2D SteeringBehavior::Arrive(Agent *agent, Vector2D target, Vector2D window
 	}
 }
 
-Vector2D SteeringBehavior::Arrive(Agent *agent, Agent *target, Vector2D window, int border, float radius, float dtime){
+Vector2D SteeringBehavior::Arrive(Agent *agent, Agent *target, Vector2D window, int border, float radius, float dtime) {
 	return Arrive(agent, target->position, window, border, radius, dtime);
 }
 
 
 //Pursue & Evade Behaviors
-Vector2D SteeringBehavior::Pursue(Agent *agent, Agent *target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Pursue(Agent *agent, Agent *target, Vector2D window, int border, float dtime) {
 	Vector2D steering = target->position - agent->position;
 	Vector2D distance = steering;
 	steering.Normalize();
@@ -134,7 +129,7 @@ Vector2D SteeringBehavior::Pursue(Agent *agent, Agent *target, Vector2D window, 
 	return Seek(agent, predictedSteering, window, border, dtime);
 }
 
-Vector2D SteeringBehavior::Evade(Agent *agent, Agent *target, Vector2D window, int border, float dtime){
+Vector2D SteeringBehavior::Evade(Agent *agent, Agent *target, Vector2D window, int border, float dtime) {
 	Vector2D steering = target->position - agent->position;
 	Vector2D distance = steering;
 	steering.Normalize();
@@ -158,10 +153,8 @@ Vector2D SteeringBehavior::Wander(Agent *agent, Vector2D window, int border, flo
 
 //Path Following Behavior
 Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, int border, float dtime) {
-	
 	if (Vector2D().Distance(agent->position, path.pathArray[agent->currentTargetIndex]) < path.arrivalDistance) {
 		agent->setIndex(agent->currentTargetIndex + agent->pathDir);
-
 		if (agent->currentTargetIndex >= 5 || agent->currentTargetIndex < 0) {
 			agent->setPathDir(agent->pathDir * -1);
 			agent->setIndex(agent->currentTargetIndex + agent->pathDir);
@@ -176,7 +169,7 @@ Vector2D SteeringBehavior::PathFollow(Agent *agent, Path path, Vector2D window, 
 Vector2D SteeringBehavior::FlockingFlee(Agent *agent, std::vector<Agent*> target) {
 	int neighborCount = 0;
 	Vector2D separationVector = {};
-	for (int i = 0; i < (int)target.size(); i++){
+	for (int i = 0; i < (int)target.size(); i++) {
 		if (Vector2D().Distance(agent->position, target[i]->position) < agent->neighborRadius) {
 			separationVector += (agent->position - target[i]->position);
 			++neighborCount;
@@ -235,10 +228,10 @@ Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Target*>
 
 	draw_circle(TheApp::Instance()->getRenderer(), (int)coneHeight.x, (int)coneHeight.y, 5, 0, 255, 0, 125);
 
-	for (int i = 0; i < (int)obstacles.size(); i++){
-		if (Vector2DUtils::IsInsideCone(obstacles[i]->getPosition(), agent[0].position, coneHeight, 20.f)){
+	for (int i = 0; i < (int)obstacles.size(); i++) {
+		if (Vector2DUtils::IsInsideCone(obstacles[i]->getPosition(), agent[0].position, coneHeight, 20.f)) {
 			float currDist = Vector2D::Distance(agent[0].position, obstacles[i]->getPosition());
-			if (currDist < shortestDistance){
+			if (currDist < shortestDistance) {
 				nearestTarget = obstacles[i]->getPosition();
 				shortestDistance = currDist;
 				collisionDetected = true;
@@ -247,7 +240,6 @@ Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Target*>
 	}
 	if (collisionDetected == true) return Flee(agent, nearestTarget, window, border, dtime);
 	else return { 0,0 };
-
 }
 
 

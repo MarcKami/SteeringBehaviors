@@ -2,7 +2,7 @@
 
 using namespace std;
 
-SceneFlocking::SceneFlocking(){
+SceneFlocking::SceneFlocking() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(100, 100));
@@ -35,25 +35,24 @@ SceneFlocking::SceneFlocking(){
 	window = { 1280, 768 };
 }
 
-SceneFlocking::~SceneFlocking(){
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneFlocking::~SceneFlocking() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
 }
 
-void SceneFlocking::update(float dtime, SDL_Event *event){
+void SceneFlocking::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT){
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
 			leader.setTarget(target);
 		}
 		break;
 	case SDL_KEYDOWN:
-		if (event->key.keysym.scancode == SDL_SCANCODE_KP_PLUS){
+		if (event->key.keysym.scancode == SDL_SCANCODE_KP_PLUS) {
 			if (agents.size() < 10) { //Set the Max number of agents
 				Agent *agent = new Agent;
 				agent->setPosition(Vector2D(600, 400));
@@ -75,7 +74,7 @@ void SceneFlocking::update(float dtime, SDL_Event *event){
 	Vector2D steering_force = leader.Behavior()->Arrive(&leader, leader.getTarget(), window, border, 100.0f, dtime);
 	leader.update(steering_force, dtime, event);
 
-	for (int i = 0; i < (int)agents.size(); i++){
+	for (int i = 0; i < (int)agents.size(); i++) {
 		Vector2D steering_force = agents[i]->Behavior()->Arrive(agents[i], leader.getPosition(), window, border, 100.0f, dtime);
 		Vector2D flocking_force = agents[i]->Behavior()->Flocking(agents[i], agents, kFlee, kSeek, kAlignment, kMaxForce, window, border, dtime);
 		steering_force += flocking_force;
@@ -83,7 +82,7 @@ void SceneFlocking::update(float dtime, SDL_Event *event){
 	}
 }
 
-void SceneFlocking::draw(){
+void SceneFlocking::draw() {
 	if (draw_vector) draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	leader.draw();
 	for (int i = 0; i < (int)agents.size(); i++) {
@@ -91,6 +90,6 @@ void SceneFlocking::draw(){
 	}
 }
 
-const char* SceneFlocking::getTitle(){
+const char* SceneFlocking::getTitle() {
 	return "SDL Steering Behaviors :: Seek & Flocking Demo";
 }

@@ -2,8 +2,7 @@
 
 using namespace std;
 
-SceneFlee::SceneFlee()
-{
+SceneFlee::SceneFlee() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
@@ -19,26 +18,21 @@ SceneFlee::SceneFlee()
 	window = { 1280, 768 };
 }
 
-SceneFlee::~SceneFlee()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneFlee::~SceneFlee() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
-	for (int i = 0; i < (int)targets.size(); i++)
-	{
+	for (int i = 0; i < (int)targets.size(); i++) {
 		delete targets[i];
 	}
 }
 
-void SceneFlee::update(float dtime, SDL_Event *event)
-{
+void SceneFlee::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			targets[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			agents[0]->setTarget(targets[0]->getPosition());
 		}
@@ -51,13 +45,11 @@ void SceneFlee::update(float dtime, SDL_Event *event)
 	targets[0]->update(dtime, event);
 }
 
-void SceneFlee::draw()
-{
+void SceneFlee::draw() {
 	targets[0]->draw();
 	agents[0]->draw();
 }
 
-const char* SceneFlee::getTitle()
-{
+const char* SceneFlee::getTitle() {
 	return "SDL Steering Behaviors :: Flee Demo";
 }

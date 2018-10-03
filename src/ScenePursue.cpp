@@ -2,8 +2,7 @@
 
 using namespace std;
 
-ScenePursue::ScenePursue()
-{
+ScenePursue::ScenePursue() {
 	Agent *agent = new Agent;
 	agent->setTarget(Vector2D(100, 100));
 	agent->setMass(0.6f);
@@ -23,22 +22,18 @@ ScenePursue::ScenePursue()
 	window = { 1280, 768 };
 }
 
-ScenePursue::~ScenePursue()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+ScenePursue::~ScenePursue() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
 }
 
-void ScenePursue::update(float dtime, SDL_Event *event)
-{
+void ScenePursue::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
 			agents[1]->setTarget(target);
 		}
@@ -54,16 +49,13 @@ void ScenePursue::update(float dtime, SDL_Event *event)
 	agents[0]->update(steering_force, dtime, event);
 }
 
-void ScenePursue::draw()
-{
+void ScenePursue::draw() {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+	for (int i = 0; i < (int)agents.size(); i++) {
 		agents[i]->draw();
 	}
 }
 
-const char* ScenePursue::getTitle()
-{
+const char* ScenePursue::getTitle() {
 	return "SDL Steering Behaviors :: Seek and Pursue Demo";
 }

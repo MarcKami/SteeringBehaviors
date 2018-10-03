@@ -2,8 +2,7 @@
 
 using namespace std;
 
-SceneArrive::SceneArrive()
-{
+SceneArrive::SceneArrive() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(0, 0));
@@ -24,26 +23,21 @@ SceneArrive::SceneArrive()
 	window = { 1280, 768 };
 }
 
-SceneArrive::~SceneArrive()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneArrive::~SceneArrive() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
-	for (int i = 0; i < (int)targets.size(); i++)
-	{
+	for (int i = 0; i < (int)targets.size(); i++) {
 		delete targets[i];
 	}
 }
 
-void SceneArrive::update(float dtime, SDL_Event *event)
-{
+void SceneArrive::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			targets[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			targets[1]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			agents[0]->setTarget(targets[0]->getPosition());
@@ -64,8 +58,7 @@ void SceneArrive::update(float dtime, SDL_Event *event)
 	if (Vector2D().Distance(agents[0]->getPosition(), targets[0]->getPosition()) < 25.0f) reached = true;
 }
 
-void SceneArrive::draw()
-{
+void SceneArrive::draw() {
 	if (draw_vector) {
 		draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 		draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 200, 0, 255, 0, 255);
@@ -75,7 +68,6 @@ void SceneArrive::draw()
 	agents[0]->draw();
 }
 
-const char* SceneArrive::getTitle()
-{
+const char* SceneArrive::getTitle() {
 	return "SDL Steering Behaviors :: Arrive Demo";
 }

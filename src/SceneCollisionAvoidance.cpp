@@ -2,7 +2,7 @@
 
 using namespace std;
 
-SceneCollisionAvoidance::SceneCollisionAvoidance(){
+SceneCollisionAvoidance::SceneCollisionAvoidance() {
 	Agent *agent = new Agent;
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
@@ -36,28 +36,24 @@ SceneCollisionAvoidance::SceneCollisionAvoidance(){
 	window = { 1280, 768 };
 }
 
-SceneCollisionAvoidance::~SceneCollisionAvoidance(){
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneCollisionAvoidance::~SceneCollisionAvoidance() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
-	for (int i = 0; i < (int)targets.size(); i++)
-	{
+	for (int i = 0; i < (int)targets.size(); i++) {
 		delete targets[i];
 	}
-	for (int i = 0; i < (int)obstacles.size(); i++)
-	{
+	for (int i = 0; i < (int)obstacles.size(); i++) {
 		delete obstacles[i];
 	}
 }
 
-void SceneCollisionAvoidance::update(float dtime, SDL_Event *event){
+void SceneCollisionAvoidance::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			targets[0]->setPosition(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			reached = false;
 			agents[0]->setTarget(targets[0]->getPosition());
@@ -73,13 +69,13 @@ void SceneCollisionAvoidance::update(float dtime, SDL_Event *event){
 	agents[0]->update(steering_force, dtime, event);
 
 	targets[0]->update(dtime, event); 
-	for (int i = 0; i < (int)obstacles.size(); i++){
+	for (int i = 0; i < (int)obstacles.size(); i++) {
 		obstacles[i]->update(dtime, event);
 	}
 	if (Vector2D().Distance(agents[0]->getPosition(), targets[0]->getPosition()) < 20.0f) reached = true;
 }
 
-void SceneCollisionAvoidance::draw(){
+void SceneCollisionAvoidance::draw() {
 	if (!reached) {
 		targets[0]->draw();
 	}
@@ -87,7 +83,6 @@ void SceneCollisionAvoidance::draw(){
 	for (int i = 0; i < (int)obstacles.size(); i++) {
 		obstacles[i]->draw();
 	}
-
 }
 
 const char* SceneCollisionAvoidance::getTitle(){

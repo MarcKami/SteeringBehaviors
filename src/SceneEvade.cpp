@@ -2,8 +2,7 @@
 
 using namespace std;
 
-SceneEvade::SceneEvade()
-{
+SceneEvade::SceneEvade() {
 	Agent *agent = new Agent;
 	agent->setTarget(Vector2D(100, 100));
 	agent->setMass(0.3f);
@@ -24,22 +23,18 @@ SceneEvade::SceneEvade()
 	window = { 1280, 768 };
 }
 
-SceneEvade::~SceneEvade()
-{
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+SceneEvade::~SceneEvade() {
+	for (int i = 0; i < (int)agents.size(); i++) {
 		delete agents[i];
 	}
 }
 
-void SceneEvade::update(float dtime, SDL_Event *event)
-{
+void SceneEvade::update(float dtime, SDL_Event *event) {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
+		if (event->button.button == SDL_BUTTON_LEFT) {
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
 			agents[1]->setTarget(target);
 		}
@@ -55,16 +50,13 @@ void SceneEvade::update(float dtime, SDL_Event *event)
 	agents[0]->update(steering_force, dtime, event);
 }
 
-void SceneEvade::draw()
-{
+void SceneEvade::draw() {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
+	for (int i = 0; i < (int)agents.size(); i++) {
 		agents[i]->draw();
 	}
 }
 
-const char* SceneEvade::getTitle()
-{
+const char* SceneEvade::getTitle() {
 	return "SDL Steering Behaviors :: Flee and Evade Demo";
 }
