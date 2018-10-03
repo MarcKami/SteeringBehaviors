@@ -1,18 +1,3 @@
-/**
-* Agent
-*
-* Agent 
-*
-* @package		Template
-* @author		Marc Martos Cabré <marc.kami1991@gmail.com>
-* @copyright	Copyright (C) 2018 - 2019, Marc Martos Cabré
-* @license		link to license
-* @link			link to package or project
-* @since		Version 1.0
-*/
-
-//-----------------------------------------------------------------------
-
 #include "Agent.h"
 
 using namespace std;
